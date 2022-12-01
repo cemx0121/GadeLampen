@@ -16,15 +16,16 @@ try:
     while True:
         timeNow = (datetime.utcnow() + timedelta(seconds=timezone)).strftime("%Y-%m-%d %H:%M:%S")
         if sunrise_time < timeNow < sunset_time and visibility > 5: # Checks if the time now is within sunrise and sunset
-            print("The sun is up and the visibility is above 5km! Motion sensor and lamp OFF! Checking in 1 minute again!")
+            print("The sun is up and the visibility is above 5km! Motion sensor and lamp OFF! Checking in 1 minute again
+            print("Current time:", timeNow)
             time.sleep(60)
         else:
             if GPIO.input(PIR_PIN) == GPIO.HIGH:
-                print("Motion Detected!", timeNow)
+                print("Motion Detected! Current time:", timeNow)
                 GPIO.output(Relay_PIN, GPIO.LOW) # Relay ON
                 time.sleep(10)
             else:
-                print("No motion detected!", timeNow)
+                print("No motion detected! Current time:", timeNow)
                 GPIO.output(Relay_PIN, GPIO.HIGH) # Relay OFF
                 time.sleep(1)
 except:
