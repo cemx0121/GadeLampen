@@ -20,11 +20,11 @@ try:
             time.sleep(60)
         else:
             if GPIO.input(PIR_PIN) == GPIO.HIGH:
-                print("Motion Detected!")
+                print("Motion Detected!", timeNow)
                 GPIO.output(Relay_PIN, GPIO.LOW) # Relay ON
                 time.sleep(10)
             else:
-                print("No motion detected!")
+                print("No motion detected!", timeNow)
                 GPIO.output(Relay_PIN, GPIO.HIGH) # Relay OFF
                 time.sleep(1)
 except:
