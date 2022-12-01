@@ -16,7 +16,7 @@ try:
     while True:
         timeNow = (datetime.utcnow() + timedelta(seconds=timezone)).strftime("%Y-%m-%d %H:%M:%S")
         if sunrise_time < timeNow < sunset_time and visibility > 5: # Checks if the time now is within sunrise and sunset
-            print("The sun is up and the visibility is above 5km! Motion sensor and lamp OFF! Checking in 1 minute again
+            print("The sun is up and the visibility is above 5km! Motion sensor and lamp OFF! Checking in 1 minute again")
             print("Current time:", timeNow)
             time.sleep(60)
         else:
