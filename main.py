@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO     # Import Library to access GPIO PIN
 import time                 # To access delay function
 from GetCityWeatherInfo import *
 from datetime import timedelta
+from UDPsender import *
 
 sunset_time, sunrise_time, visibility, timezone = GetCityWeatherInfo()
 
@@ -11,10 +12,11 @@ GPIO.setmode(GPIO.BOARD)    # Consider complete raspberry-pi board
 GPIO.setwarnings(False)     # To avoid same PIN use warning
 GPIO.setup(Relay_PIN,GPIO.OUT)   # Set pin function as output
 GPIO.setup(PIR_PIN,GPIO.IN)   # Set pin function as input
+deviceName = "Phillips Hue Bulb 1" 
 
 try:
     while True:
-        timeNow = (datetime.utcnow() + timedelta(seconds=timezone)).strftime("%Y-%m-%d %H:%M:%S")
+        timeNow = (datetime.utcnow() + timedelta(seconds=timezone)).strftime("%Y-%m-%dT%H:%M:%S")
         if sunrise_time < timeNow < sunset_time and visibility > 5: # Checks if the time now is within sunrise and sunset
             print("The sun is up and the visibility is above 5km! Motion sensor and lamp OFF! Checking in 1 minute again")
             print("Current time:", timeNow)
@@ -23,6 +25,7 @@ try:
             if GPIO.input(PIR_PIN) == GPIO.HIGH:
                 print("Motion Detected! Current time:", timeNow)
                 GPIO.output(Relay_PIN, GPIO.LOW) # Relay ON
+                SendUDPPacket(deviceName, timeNow)
                 time.sleep(10)
             else:
                 print("No motion detected! Current time:", timeNow)
