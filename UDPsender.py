@@ -1,15 +1,12 @@
 from socket import *
-import time
 from datetime import *
 
 serverName = "255.255.255.255"
 serverPort = 18000
 
-def SendUDPPacket(deviceName, turnOnTime)
+def SendUDPPacket(deviceName, turnOnTime, watt, turnOnDuration, cityname, country):
     clientSocket = socket(AF_INET, SOCK_DGRAM)
     clientSocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-    timeNow = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
-    message = '{"deviceName":"'+ deviceName +'","turnedOn":"'+ turnOnTime +'"}'
+    message = '{"deviceName":"'+ deviceName +'","turnedOn":"'+ turnOnTime +'", "watt": '+ str(watt) +', "turnOnDuration": '+ str(turnOnDuration) +', "city":"'+ cityname +'", "country":"'+ country +'"}'
     clientSocket.sendto(message.encode(), (serverName, serverPort))
-    time.sleep(5)
     clientSocket.close()
