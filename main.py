@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from UDPsender import *
 
 # Collect info about the bulb running this script
-deviceName = input("Angiv hvor navnet på denne pære: ")
-turnOnDuration = input("Angiv hvor længe pæren skal lyse når den fanger bevægelse: ")
+deviceName = input("Angiv hvad navnet på denne pære er: ")
+turnOnDuration = int(input("Angiv hvor længe pæren skal lyse når den fanger bevægelse: "))
 watt = input("Angiv hvor mange watt denne pære bruger: ")
 sunset_time, sunrise_time, visibility, timezone, cityname, country = GetCityWeatherInfo()
 
@@ -19,7 +19,7 @@ GPIO.setup(PIR_PIN,GPIO.IN)   # Set pin function as input
 
 try:
     while True:
-        timeNow = (datetime.utcnow() + timedelta(seconds=timezone))
+        timeNow = (datetime.utcnow() + timedelta(seconds=timezone)).strftime("%Y-%m-%dT%H:%M:%S")
         if sunrise_time < timeNow < sunset_time and visibility > 5: # Checks if the time now is within sunrise and sunset
             print("The sun is up and the visibility is above 5km! Motion sensor and lamp OFF! Checking in 1 minute again")
             print("Current time:", timeNow)
@@ -28,7 +28,6 @@ try:
             if GPIO.input(PIR_PIN) == GPIO.HIGH:
                 print("Motion Detected! Current time:", timeNow)
                 GPIO.output(Relay_PIN, GPIO.LOW) # Relay ON
-                timeNow.strftime("%Y-%m-%dT%H:%M:%S")
                 SendUDPPacket(deviceName, timeNow, watt, turnOnDuration, cityname, country)
                 t.sleep(turnOnDuration)
             else:
