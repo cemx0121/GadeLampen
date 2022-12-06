@@ -3,7 +3,7 @@ from datetime import datetime
 
 def GetCityWeatherInfo():
     while True:
-        city = input("Hvilken by befinder du dig i? : ")  # Takes input which city the lamp is in.
+        city = input("Hvilken by befinder dette device sig i: ")  # Takes input which city the lamp is in.
         url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid=08ee16c2dc794824ee9b4d2f71a7091d".format(city)  # Gets the weather data from third party API from the city from th$
         res = requests.get(url)  # Makes a HTTP GET request to the URL and saves the response
         data = res.json()  # Saves the data from the response in JSON format
