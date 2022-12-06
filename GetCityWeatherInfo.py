@@ -15,6 +15,10 @@ def GetCityWeatherInfo():
             timezone = data["timezone"]
             global visibility
             visibility = data["visibility"] / 1000 # To get visibility in kilometers
+            global cityname
+            cityname = data["name"]
+            global country
+            country = data["sys"]["country"]
             # Saves the sunrise/sunset time in UNIX format and adds the timezone from the API
             sunrise_time_unixAndTimezone = data["sys"]["sunrise"] + timezone
             sunset_time_unixAndTimezone = data["sys"]["sunset"] + timezone
@@ -22,11 +26,11 @@ def GetCityWeatherInfo():
             # The variables are made global to be accessed outside of the function
             global sunset_time
             global sunrise_time
-            sunrise_time = datetime.utcfromtimestamp(sunrise_time_unixAndTimezone).strftime("%Y-%m-%d %H:%M:%S")
-            sunset_time = datetime.utcfromtimestamp(sunset_time_unixAndTimezone).strftime("%Y-%m-%d %H:%M:%S")
-            print(data["name"])
+            sunrise_time = datetime.utcfromtimestamp(sunrise_time_unixAndTimezone)
+            sunset_time = datetime.utcfromtimestamp(sunset_time_unixAndTimezone)
+            print("Vejr info i:", cityname + ", " + country)
             print("Solopgang:", sunrise_time)
             print("Solnedgang:", sunset_time)
-            print("Sigtbarhed(km):", visibility)
-            return sunset_time, sunrise_time, visibility, timezone
+            print("Sigtbarhed:", visibility, "km")
+            return sunset_time, sunrise_time, visibility, timezone, cityname, country
             break
