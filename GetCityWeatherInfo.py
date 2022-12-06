@@ -26,8 +26,8 @@ def GetCityWeatherInfo():
             # The variables are made global to be accessed outside of the function
             global sunset_time
             global sunrise_time
-            sunrise_time = datetime.utcfromtimestamp(sunrise_time_unixAndTimezone)
-            sunset_time = datetime.utcfromtimestamp(sunset_time_unixAndTimezone)
+            sunrise_time = datetime.utcfromtimestamp(sunrise_time_unixAndTimezone).strftime("%Y-%m-%dT%H:%M:%S")
+            sunset_time = datetime.utcfromtimestamp(sunset_time_unixAndTimezone).strftime("%Y-%m-%dT%H:%M:%S")
             print("Vejr info i:", cityname + ", " + country)
             print("Solopgang:", sunrise_time)
             print("Solnedgang:", sunset_time)
