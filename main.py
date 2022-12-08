@@ -3,11 +3,9 @@ import time as t                 # To access delay function
 from GetCityWeatherInfo import *
 from datetime import datetime, timedelta
 from UDPsender import *
+from CollectBulbInfo import *
 
-# Collect info about the bulb running this script
-deviceName = input("Angiv hvad navnet på denne pære er: ")
-turnOnDuration = int(input("Angiv hvor længe pæren skal lyse når den fanger bevægelse: "))
-watt = input("Angiv hvor mange watt denne pære bruger: ")
+deviceName, turnOnDuration, watt = CollectBulbInfo()
 sunset_time, sunrise_time, visibility, timezone, cityname, country = GetCityWeatherInfo()
 
 PIR_PIN = 7                 # Define PIN for PIR
