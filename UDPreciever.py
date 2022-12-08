@@ -3,7 +3,7 @@ from socket import *
 import threading
 import requests
 
-URL = 'https://lamperestapi.azurewebsites.net/api/lamps'
+URL = 'https://gadelampenrest.azurewebsites.net/api/lamps'
 def Add(lampInfo):
     response = requests.post(URL, json=lampInfo)
     return response
